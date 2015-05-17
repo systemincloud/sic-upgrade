@@ -5,9 +5,8 @@ import java.io.File;
 import javax.xml.transform.TransformerException;
 
 import com.systemincloud.modeler.upgrade.common.AbstractExecute;
-import com.systemincloud.modeler.upgrade.common.IExecute;
 
-public class Execute extends AbstractExecute implements IExecute {
+public class Execute extends AbstractExecute {
 
 	@Override
 	public boolean execute(File file) {

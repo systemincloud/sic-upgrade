@@ -50,8 +50,17 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.Document;
 import org.eclipse.text.edits.MalformedTreeException;
 
-public abstract class AbstractExecute {
+public abstract class AbstractExecute implements IExecute {
 
+	public boolean upgrade(String root) {
+		boolean result = true;
+		Collection<File> files = FileUtils.listFiles(new File(root), new RegexFileFilter("^(.*?(\\.sic|\\.sict))"), DirectoryFileFilter.DIRECTORY);
+		for(File f : files)
+			result = result | execute(f);
+		result = result | execute(root);
+		return result;
+	}
+	
 	private static String mainTaskVersionXsl;
 	private static String consoleVersionXsl;
 	private static String constantVersionXsl;
