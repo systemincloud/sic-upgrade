@@ -4,6 +4,7 @@ import java.io.File;
 
 import javax.xml.transform.TransformerException;
 
+import com.systemincloud.ext.vip.modeler.upgrade.v0_3_3.to.v0_3_4.VipExecute;
 import com.systemincloud.modeler.upgrade.common.AbstractExecute;
 
 public class Execute extends AbstractExecute {
@@ -16,6 +17,8 @@ public class Execute extends AbstractExecute {
 			xml = super.executeOnSic(xml);
 
 			xml = updateTaskVerConsole(xml, "0.1.4");
+			
+			xml = new VipExecute().executeOnFile(xml);
 			//
 			//
 			//

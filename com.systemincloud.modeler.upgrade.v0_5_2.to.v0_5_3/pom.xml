@@ -7,8 +7,9 @@
 	<name>System in Cloud Modeler - Upgrade - 0.5.2 to 0.5.3</name>
 
 	<dependencies>
-		<dependency><groupId>com.systemincloud.modeler.upgrade</groupId><artifactId>com.systemincloud.modeler.upgrade.common</artifactId><version>2.4.0</version>                   </dependency>
-		<dependency><groupId>junit</groupId>                            <artifactId>junit</artifactId>                                   <version>4.11</version> <scope>test</scope></dependency>
+		<dependency><groupId>com.systemincloud.modeler.upgrade</groupId>        <artifactId>com.systemincloud.modeler.upgrade.common</artifactId>                  <version>2.4.0</version>                   </dependency>
+		<dependency><groupId>com.systemincloud.ext.vip.modeler.upgrade</groupId><artifactId>com.systemincloud.ext.vip.modeler.upgrade.v0_3_3.to.v0_3_4</artifactId><version>1.0.0</version>                   </dependency>
+		<dependency><groupId>junit</groupId>                                    <artifactId>junit</artifactId>                                                     <version>4.11</version> <scope>test</scope></dependency>
 	</dependencies>
 
 	<repositories>
