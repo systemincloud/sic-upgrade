@@ -15,7 +15,8 @@ public class Execute extends AbstractExecute {
 			xml = readFile(file);
 			xml = super.executeOnSic(xml);
 			
-			xml = updateTaskVerJavaTask(xml, "0.3.0");
+			xml = updateTaskVerEmbeddedTask(xml, "0.3.0");
+			xml = updateTaskVerJavaTask    (xml, "0.3.0");
 			
 			//
 			//
