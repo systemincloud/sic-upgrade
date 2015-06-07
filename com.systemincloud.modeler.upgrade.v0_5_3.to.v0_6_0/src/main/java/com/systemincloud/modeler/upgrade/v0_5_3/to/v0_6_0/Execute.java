@@ -1,8 +1,13 @@
 package com.systemincloud.modeler.upgrade.v0_5_3.to.v0_6_0;
 
 import java.io.File;
+import java.util.Collection;
 
 import javax.xml.transform.TransformerException;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.DirectoryFileFilter;
+import org.apache.commons.io.filefilter.RegexFileFilter;
 
 import com.systemincloud.modeler.upgrade.common.AbstractExecute;
 
@@ -28,7 +33,13 @@ public class Execute extends AbstractExecute {
 
 	@Override
 	public boolean execute(String root) {
-		return super.executeOnRoot(root);
+		super.executeOnRoot(root);
+		Collection<File> files = FileUtils.listFiles(new File(root), new RegexFileFilter("^(.*?(\\.sict))"), DirectoryFileFilter.DIRECTORY);
+		for(File f : files) {
+			String p = f.getAbsolutePath();
+			f.renameTo(new File(p.substring(0, p.length() - 6) + ".sic"));
+		}
+		return true;
 	}
 
 	@Override
