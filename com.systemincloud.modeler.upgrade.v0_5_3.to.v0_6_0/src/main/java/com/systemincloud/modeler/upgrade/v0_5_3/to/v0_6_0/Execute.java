@@ -11,6 +11,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
 import org.apache.commons.io.filefilter.RegexFileFilter;
 
+import com.systemincloud.ext.vip.modeler.upgrade.v0_3_4.to.v0_3_5.VipExecute;
 import com.systemincloud.modeler.upgrade.common.AbstractExecute;
 
 public class Execute extends AbstractExecute {
@@ -27,6 +28,7 @@ public class Execute extends AbstractExecute {
 			
 			xml = addOnlyLocalAttribute(xml);
 			
+			xml = new VipExecute().executeOnFile(xml);
 			//
 			//
 			//
