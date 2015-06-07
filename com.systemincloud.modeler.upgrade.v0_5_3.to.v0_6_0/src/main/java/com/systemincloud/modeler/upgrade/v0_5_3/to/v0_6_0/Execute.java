@@ -23,8 +23,19 @@ public class Execute extends AbstractExecute {
 			xml = readFile(file);
 			xml = super.executeOnSic(xml);
 			
-			xml = updateTaskVerEmbeddedTask(xml, "0.3.0");
-			xml = updateTaskVerJavaTask    (xml, "0.3.0");
+			xml = updateTaskVerConsole        (xml, "0.1.5");
+			xml = updateTaskVerConstant       (xml, "0.2.4");
+			xml = updateTaskVerDemux          (xml, "0.1.3");
+			xml = updateTaskVerEmbeddedTask   (xml, "0.3.0");
+			xml = updateTaskVerAnd            (xml, "0.1.3");
+			xml = updateTaskVerNot            (xml, "0.1.3");
+			xml = updateTaskVerXor            (xml, "0.1.3");
+			xml = updateTaskVerOr             (xml, "0.1.3");
+			xml = updateTaskVerInspect        (xml, "0.1.1");
+			xml = updateTaskVerJavaTask       (xml, "0.3.0");
+			xml = updateTaskVerMux            (xml, "0.1.3");
+			xml = updateTaskVerRandomGenerator(xml, "0.2.4");
+			xml = updateTaskVerSipo           (xml, "0.1.3");
 			
 			xml = addOnlyLocalAttribute(xml);
 			
