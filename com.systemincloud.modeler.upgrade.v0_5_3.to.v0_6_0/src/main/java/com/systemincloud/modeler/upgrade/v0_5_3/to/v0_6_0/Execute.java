@@ -37,7 +37,7 @@ public class Execute extends AbstractExecute {
 		Collection<File> files = FileUtils.listFiles(new File(root), new RegexFileFilter("^(.*?(\\.sict))"), DirectoryFileFilter.DIRECTORY);
 		for(File f : files) {
 			String p = f.getAbsolutePath();
-			f.renameTo(new File(p.substring(0, p.length() - 6) + ".sic"));
+			f.renameTo(new File(p.substring(0, p.length() - 5) + ".sic"));
 		}
 		return true;
 	}
