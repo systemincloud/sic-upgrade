@@ -6,6 +6,7 @@ import java.util.Collection;
 import javax.xml.transform.TransformerException;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
 import org.apache.commons.io.filefilter.RegexFileFilter;
 
@@ -22,6 +23,8 @@ public class Execute extends AbstractExecute {
 			
 			xml = updateTaskVerEmbeddedTask(xml, "0.3.0");
 			xml = updateTaskVerJavaTask    (xml, "0.3.0");
+			
+			xml = transform(xml, IOUtils.toString(Execute.class.getResourceAsStream("only-local.xsl"), "UTF-8"), null);
 			
 			//
 			//
