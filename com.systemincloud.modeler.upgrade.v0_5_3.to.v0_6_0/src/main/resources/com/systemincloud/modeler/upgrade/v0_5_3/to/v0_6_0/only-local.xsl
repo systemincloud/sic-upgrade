@@ -13,13 +13,15 @@
 		</xsl:copy>
 	</xsl:template>
 	<xsl:template match="task[@bundleName='com.systemincloud.modeler.tasks.console' and not(@onlyLocal)]">
-		<xsl:attribute name="onlyLocal">
-    		<xsl:value-of select="true" />
-  		</xsl:attribute>
+		<xsl:copy>
+			<xsl:attribute name="onlyLocal">true</xsl:attribute>
+      		<xsl:apply-templates select="@*|node()" />
+    	</xsl:copy>
 	</xsl:template>
 	<xsl:template match="task[@bundleName='com.systemincloud.modeler.tasks.inspect' and not(@onlyLocal)]">
-		<xsl:attribute name="onlyLocal">
-    		<xsl:value-of select="true" />
-  		</xsl:attribute>
+		<xsl:copy>
+			<xsl:attribute name="onlyLocal">true</xsl:attribute>
+      		<xsl:apply-templates select="@*|node()" />
+    	</xsl:copy>
 	</xsl:template>
 </xsl:stylesheet>

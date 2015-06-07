@@ -1,6 +1,7 @@
 package com.systemincloud.modeler.upgrade.v0_5_3.to.v0_6_0;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 
 import javax.xml.transform.TransformerException;
@@ -24,7 +25,7 @@ public class Execute extends AbstractExecute {
 			xml = updateTaskVerEmbeddedTask(xml, "0.3.0");
 			xml = updateTaskVerJavaTask    (xml, "0.3.0");
 			
-			xml = transform(xml, IOUtils.toString(Execute.class.getResourceAsStream("only-local.xsl"), "UTF-8"), null);
+			xml = addOnlyLocalAttribute(xml);
 			
 			//
 			//
@@ -32,6 +33,10 @@ public class Execute extends AbstractExecute {
 			super.writeFile(file, xml);
 		} catch (Exception e) { return false; }
 		return true;
+	}
+
+	public String addOnlyLocalAttribute(String xml) throws TransformerException, IOException {
+		return transform(xml, IOUtils.toString(Execute.class.getResourceAsStream("only-local.xsl"), "UTF-8"), null);
 	}
 
 	@Override
