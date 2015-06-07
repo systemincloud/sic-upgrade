@@ -3,7 +3,7 @@
 
 	<groupId>com.systemincloud.modeler.upgrade</groupId>
 	<artifactId>com.systemincloud.modeler.upgrade.common</artifactId>
-	<version>2.4.0</version>
+	<version>2.5.0</version>
 	<name>System in Cloud Modeler - Upgrade - Common</name>
 	
 	<dependencies>

@@ -66,6 +66,7 @@ public abstract class AbstractExecute implements IExecute {
 	private static String constantVersionXsl;
 	private static String demuxVersionXsl;
 	private static String embeddedTaskVersionXsl;
+	private static String inspectVersionXsl;
 	private static String andVersionXsl;
 	private static String orVersionXsl;
 	private static String xorVersionXsl;
@@ -85,6 +86,7 @@ public abstract class AbstractExecute implements IExecute {
 			constantVersionXsl         = IOUtils.toString(AbstractExecute.class.getResourceAsStream("constant-version.xsl"), "UTF-8");
 			demuxVersionXsl            = IOUtils.toString(AbstractExecute.class.getResourceAsStream("demux-version.xsl"), "UTF-8");
 			embeddedTaskVersionXsl     = IOUtils.toString(AbstractExecute.class.getResourceAsStream("embedded-task-version.xsl"), "UTF-8");
+			inspectVersionXsl          = IOUtils.toString(AbstractExecute.class.getResourceAsStream("inspect-version.xsl"), "UTF-8");
 			andVersionXsl              = IOUtils.toString(AbstractExecute.class.getResourceAsStream("and-version.xsl"), "UTF-8");
 			orVersionXsl               = IOUtils.toString(AbstractExecute.class.getResourceAsStream("or-version.xsl"), "UTF-8");
 			xorVersionXsl              = IOUtils.toString(AbstractExecute.class.getResourceAsStream("xor-version.xsl"), "UTF-8");
@@ -171,6 +173,7 @@ public abstract class AbstractExecute implements IExecute {
 	public static String updateTaskVerConstant       (String xml, String version) throws TransformerException { return transform(xml, constantVersionXsl,        "version", version); }
 	public static String updateTaskVerDemux          (String xml, String version) throws TransformerException { return transform(xml, demuxVersionXsl,           "version", version); }
 	public static String updateTaskVerEmbeddedTask   (String xml, String version) throws TransformerException { return transform(xml, embeddedTaskVersionXsl,    "version", version); }
+	public static String updateTaskVerInspect        (String xml, String version) throws TransformerException { return transform(xml, inspectVersionXsl,         "version", version); }
 	public static String updateTaskVerAnd            (String xml, String version) throws TransformerException { return transform(xml, andVersionXsl,             "version", version); }
 	public static String updateTaskVerOr             (String xml, String version) throws TransformerException { return transform(xml, orVersionXsl,              "version", version); }
 	public static String updateTaskVerXor            (String xml, String version) throws TransformerException { return transform(xml, xorVersionXsl,             "version", version); }
