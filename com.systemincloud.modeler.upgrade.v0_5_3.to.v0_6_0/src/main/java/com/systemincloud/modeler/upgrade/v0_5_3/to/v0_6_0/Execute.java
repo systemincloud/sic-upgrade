@@ -1,4 +1,4 @@
-package com.systemincloud.modeler.upgrade.v0_5_3.to.v0_5_4;
+package com.systemincloud.modeler.upgrade.v0_5_3.to.v0_6_0;
 
 import java.io.File;
 
@@ -38,6 +38,6 @@ public class Execute extends AbstractExecute {
 
 	@Override
 	protected String getVersion() {
-		return "0.5.4";
+		return "0.6.0";
 	}
 }
