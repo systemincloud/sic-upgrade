@@ -18,4 +18,12 @@ public class ExecuteTest {
 		String expected = IOUtils.toString(ExecuteTest.class.getResourceAsStream("Cascade.out.sict"));
 		assertEquals(expected, out);
 	}
+	
+	@Test
+	public void testImplementationTaskRemoveSict() throws IOException, TransformerException {
+		String in = IOUtils.toString(ExecuteTest.class.getResourceAsStream("GeneratorAtomic1SIn_Main.sict"));
+		String out = new Execute().addOnlyLocalAttribute(in);
+		String expected = IOUtils.toString(ExecuteTest.class.getResourceAsStream("GeneratorAtomic1SIn_Main.out.sict"));
+		assertEquals(expected, out);
+	}
 }

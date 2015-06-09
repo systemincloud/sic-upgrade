@@ -38,6 +38,7 @@ public class Execute extends AbstractExecute {
 			xml = updateTaskVerSipo           (xml, "0.1.3");
 			
 			xml = addOnlyLocalAttribute(xml);
+			xml = implementationTaskRemoveSict(xml);
 			
 			xml = new VipExecute().executeOnFile(xml);
 			//
@@ -52,6 +53,10 @@ public class Execute extends AbstractExecute {
 		return transform(xml, IOUtils.toString(Execute.class.getResourceAsStream("only-local.xsl"), "UTF-8"), null);
 	}
 
+	public String implementationTaskRemoveSict(String xml) throws TransformerException, IOException {
+		return transform(xml, IOUtils.toString(Execute.class.getResourceAsStream("implementation-task-remove-sict.xsl"), "UTF-8"), null);
+	}
+	
 	@Override
 	public boolean execute(String root) {
 		super.executeOnRoot(root);
