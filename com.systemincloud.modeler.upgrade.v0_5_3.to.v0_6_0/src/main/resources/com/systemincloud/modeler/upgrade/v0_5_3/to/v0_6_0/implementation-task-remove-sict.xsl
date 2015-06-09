@@ -14,10 +14,22 @@
 		</xsl:copy>
 	</xsl:template>
 	<xsl:template match="@implementationTask[parent::task[@xsi:type='sic:EmbeddedTask']]">
-		<xsl:attribute name="attr1">
+		<xsl:attribute name="implementationTask">
 			<xsl:choose>
 				<xsl:when test="ends-with(., '.sict')">
-		        	<xsl:value-of select="translate(., '.sict', '.sic')"/>
+		        	<xsl:value-of select="replace(., '.sict', '.sic')"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="." />
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:attribute>
+	</xsl:template>
+	<xsl:template match="@value[parent::graphicsAlgorithmChildren[@xsi:type='al:Text']]">
+		<xsl:attribute name="value">
+			<xsl:choose>
+				<xsl:when test="ends-with(., 'sict')">
+		        	<xsl:value-of select="replace(., 'sict', 'sic')"/>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:value-of select="." />

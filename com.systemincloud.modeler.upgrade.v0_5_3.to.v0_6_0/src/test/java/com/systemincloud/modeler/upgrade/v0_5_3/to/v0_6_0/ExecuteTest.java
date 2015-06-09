@@ -10,7 +10,7 @@ import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 public class ExecuteTest {
-
+	
 	@Test
 	public void testAddOnlyLocalAttribute() throws IOException, TransformerException {
 		String in = IOUtils.toString(ExecuteTest.class.getResourceAsStream("Cascade.sict"));
@@ -22,7 +22,7 @@ public class ExecuteTest {
 	@Test
 	public void testImplementationTaskRemoveSict() throws IOException, TransformerException {
 		String in = IOUtils.toString(ExecuteTest.class.getResourceAsStream("GeneratorAtomic1SIn_Main.sict"));
-		String out = new Execute().addOnlyLocalAttribute(in);
+		String out = new Execute().implementationTaskRemoveSict(in);
 		String expected = IOUtils.toString(ExecuteTest.class.getResourceAsStream("GeneratorAtomic1SIn_Main.out.sict"));
 		assertEquals(expected, out);
 	}
