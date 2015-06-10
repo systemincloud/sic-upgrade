@@ -70,7 +70,7 @@ public class Execute extends AbstractExecute {
 
 	@Override
 	protected String executeOnPom(String pom) throws TransformerException {
-		return pom;
+		return updateDependencyVersion(pom, "com.systemincloud.modeler.tasks.javatask:com.systemincloud.modeler.tasks.javatask.api", "0.4.0");
 	}
 
 	@Override
