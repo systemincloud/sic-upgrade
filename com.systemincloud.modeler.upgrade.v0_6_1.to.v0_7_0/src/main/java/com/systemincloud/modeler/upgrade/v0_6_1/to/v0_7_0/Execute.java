@@ -16,6 +16,20 @@ public class Execute extends AbstractExecute {
 			xml = readFile(file);
 			xml = super.executeOnSic(xml);
 			
+			xml = updateTaskVerConsole        (xml, "0.1.6");
+			xml = updateTaskVerConstant       (xml, "0.2.5");
+			xml = updateTaskVerDemux          (xml, "0.1.4");
+			xml = updateTaskVerEmbeddedTask   (xml, "0.3.1");
+			xml = updateTaskVerAnd            (xml, "0.1.4");
+			xml = updateTaskVerNot            (xml, "0.1.4");
+			xml = updateTaskVerXor            (xml, "0.1.4");
+			xml = updateTaskVerOr             (xml, "0.1.4");
+			xml = updateTaskVerInspect        (xml, "0.1.2");
+			xml = updateTaskVerJavaTask       (xml, "0.3.1");
+			xml = updateTaskVerMux            (xml, "0.1.4");
+			xml = updateTaskVerRandomGenerator(xml, "0.2.5");
+			xml = updateTaskVerSipo           (xml, "0.1.4");
+			
 			xml = new VipExecute().executeOnFile(xml);
 			//
 			//

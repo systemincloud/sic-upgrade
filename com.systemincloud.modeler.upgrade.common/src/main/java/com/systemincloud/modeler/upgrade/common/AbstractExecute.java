@@ -141,7 +141,7 @@ public abstract class AbstractExecute implements IExecute {
 				                                     new RegexFileFilter("^.*\\.java$"),
 				                                     DirectoryFileFilter.DIRECTORY);
 		try {
-			for(File f :files) {
+			for(File f : files) {
 				Scanner scanner = new Scanner(f);
 				while(scanner.hasNextLine()){
 					if(scanner.nextLine().trim().contains("@JavaTaskInfo")) {
