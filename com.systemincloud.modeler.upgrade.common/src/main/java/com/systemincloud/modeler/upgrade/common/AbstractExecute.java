@@ -54,7 +54,7 @@ public abstract class AbstractExecute implements IExecute {
 
 	public boolean upgrade(String root) {
 		boolean result = true;
-		Collection<File> files = FileUtils.listFiles(new File(root), new RegexFileFilter("^(.*?(\\.sic|\\.sict))"), DirectoryFileFilter.DIRECTORY);
+		Collection<File> files = FileUtils.listFiles(new File(root), new RegexFileFilter("^(.*?(\\.sic))"), DirectoryFileFilter.DIRECTORY);
 		for(File f : files)
 			result = result | execute(f);
 		result = result | execute(root);
