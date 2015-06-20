@@ -25,7 +25,7 @@ public class Execute extends AbstractExecute {
 			xml = updateTaskVerXor            (xml, "0.1.4");
 			xml = updateTaskVerOr             (xml, "0.1.4");
 			xml = updateTaskVerInspect        (xml, "0.1.2");
-			xml = updateTaskVerJavaTask       (xml, "0.3.1");
+			xml = updateTaskVerJavaTask       (xml, "0.4.0");
 			xml = updateTaskVerMux            (xml, "0.1.4");
 			xml = updateTaskVerRandomGenerator(xml, "0.2.5");
 			xml = updateTaskVerSipo           (xml, "0.1.4");
@@ -46,7 +46,9 @@ public class Execute extends AbstractExecute {
 
 	@Override
 	protected String executeOnPom(String pom) throws TransformerException {
-		return pom;
+		return updateDependencyVersion(pom, "com.systemincloud.modeler.tasks.javatask"
+				                         + ":com.systemincloud.modeler.tasks.javatask.api", 
+				                            "0.5.0");
 	}
 
 	@Override
