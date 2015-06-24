@@ -27,17 +27,17 @@ public class ExecuteTest {
 	
 	@Test
 	public void testMuxGroup() throws IOException, TransformerException {
-		String in = IOUtils.toString(ExecuteTest.class.getResourceAsStream("Simple.sic"));
+		String in = IOUtils.toString(ExecuteTest.class.getResourceAsStream("Simple.mux.sic"));
 		String out = new Execute().muxAddGroup(in);
-		String expected = IOUtils.toString(ExecuteTest.class.getResourceAsStream("Simple.out.sic"));
+		String expected = IOUtils.toString(ExecuteTest.class.getResourceAsStream("Simple.mux.out.sic"));
 		assertEquals(expected, out);
 	}
 	
 	@Test
 	public void testDemuxGroup() throws IOException, TransformerException {
-		String in = IOUtils.toString(ExecuteTest.class.getResourceAsStream("Simple.sic"));
+		String in = IOUtils.toString(ExecuteTest.class.getResourceAsStream("Simple.demux.sic"));
 		String out = new Execute().demuxAddGroup(in);
-		String expected = IOUtils.toString(ExecuteTest.class.getResourceAsStream("Simple.out.sic"));
+		String expected = IOUtils.toString(ExecuteTest.class.getResourceAsStream("Simple.demux.out.sic"));
 		assertEquals(expected, out);
 	}
 }
