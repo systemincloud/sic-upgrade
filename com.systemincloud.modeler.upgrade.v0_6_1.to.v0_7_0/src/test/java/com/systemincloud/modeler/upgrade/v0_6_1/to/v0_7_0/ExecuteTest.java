@@ -1,8 +1,11 @@
 package com.systemincloud.modeler.upgrade.v0_6_1.to.v0_7_0;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
+
+import javax.xml.transform.TransformerException;
 
 import org.apache.commons.io.IOUtils;
 import org.eclipse.jdt.core.JavaModelException;
@@ -20,5 +23,21 @@ public class ExecuteTest {
 			Document ret      = new Execute().updateJavaTask(document);
 			System.out.println(ret.get());
 		} catch (IOException | JavaModelException | IllegalArgumentException | MalformedTreeException | BadLocationException e) { fail(e.getMessage()); }
+	}
+	
+	@Test
+	public void testMuxGroup() throws IOException, TransformerException {
+		String in = IOUtils.toString(ExecuteTest.class.getResourceAsStream("Simple.sic"));
+		String out = new Execute().muxAddGroup(in);
+		String expected = IOUtils.toString(ExecuteTest.class.getResourceAsStream("Simple.out.sic"));
+		assertEquals(expected, out);
+	}
+	
+	@Test
+	public void testDemuxGroup() throws IOException, TransformerException {
+		String in = IOUtils.toString(ExecuteTest.class.getResourceAsStream("Simple.sic"));
+		String out = new Execute().demuxAddGroup(in);
+		String expected = IOUtils.toString(ExecuteTest.class.getResourceAsStream("Simple.out.sic"));
+		assertEquals(expected, out);
 	}
 }

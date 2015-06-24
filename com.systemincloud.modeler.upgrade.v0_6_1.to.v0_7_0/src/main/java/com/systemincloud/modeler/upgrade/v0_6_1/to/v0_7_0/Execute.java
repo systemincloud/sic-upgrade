@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import javax.xml.transform.TransformerException;
 
+import org.apache.commons.io.IOUtils;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTVisitor;
@@ -44,6 +45,9 @@ public class Execute extends AbstractExecute {
 			xml = updateTaskVerRandomGenerator(xml, "0.2.5");
 			xml = updateTaskVerSipo           (xml, "0.1.4");
 			
+			xml = muxAddGroup(xml);
+			xml = demuxAddGroup(xml);
+			
 			xml = new VipExecute().executeOnFile(xml);
 			//
 			//
@@ -51,6 +55,14 @@ public class Execute extends AbstractExecute {
 			super.writeFile(file, xml);
 		} catch (Exception e) { return false; }
 		return true;
+	}
+	
+	public String muxAddGroup(String xml) throws TransformerException, IOException {
+		return transform(xml, IOUtils.toString(Execute.class.getResourceAsStream("mux-group.xsl"), "UTF-8"), null);
+	}
+	
+	public String demuxAddGroup(String xml) throws TransformerException, IOException {
+		return transform(xml, IOUtils.toString(Execute.class.getResourceAsStream("demux-group.xsl"), "UTF-8"), null);
 	}
 	
 	@Override
