@@ -1,8 +1,22 @@
 package com.systemincloud.modeler.upgrade.v0_6_1.to.v0_7_0;
 
 import java.io.File;
+import java.io.IOException;
 
 import javax.xml.transform.TransformerException;
+
+import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTVisitor;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.PrimitiveType;
+import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.Document;
+import org.eclipse.text.edits.MalformedTreeException;
+import org.eclipse.text.edits.TextEdit;
 
 import com.systemincloud.ext.vip.modeler.upgrade.v0_3_5.to.v0_3_6.VipExecute;
 import com.systemincloud.modeler.upgrade.common.AbstractExecute;
@@ -54,5 +68,41 @@ public class Execute extends AbstractExecute {
 	@Override
 	protected String getVersion() {
 		return "0.7.0";
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	protected Document updateJavaTask(Document doc) throws IOException,
+	                                                       JavaModelException,
+	                                                       IllegalArgumentException,
+	                                                       MalformedTreeException,
+	                                                       BadLocationException {
+		final CompilationUnit acu = getCompilationUnit(doc);
+		if(acu == null) return null;
+
+		final AST        ast      = acu.getAST();
+		final ASTRewrite rewriter = ASTRewrite.create(ast);
+
+		acu.recordModifications();
+
+		acu.accept(new ASTVisitor() {
+			@Override public boolean visit(final MethodDeclaration node) {
+				if(node.getName().getIdentifier().equals("execute")) {
+					SingleVariableDeclaration svd = ast.newSingleVariableDeclaration();
+					svd.setType(ast.newPrimitiveType(PrimitiveType.INT));
+					svd.setName(ast.newSimpleName("grp"));
+					node.parameters().add(svd);
+					return false;
+				}
+				return false;
+		}});
+
+		try{
+		TextEdit edits = rewriter.rewriteAST(doc, null);
+		edits.apply(doc);
+		} catch(Exception e) { 
+			e.getMessage();
+		}
+		return doc;
 	}
 }
