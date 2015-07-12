@@ -14,6 +14,7 @@ public class Execute extends AbstractExecute {
             xml = super.executeOnSic(xml);
 
             xml = updateTaskVerConsole(xml, "0.1.7");
+            xml = updateTaskVerDemux  (xml, "0.3.0");
             xml = updateTaskVerSipo   (xml, "0.1.5");
             //
             //
