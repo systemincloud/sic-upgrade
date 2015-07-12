@@ -13,6 +13,7 @@ public class Execute extends AbstractExecute {
             xml = readFile(file);
             xml = super.executeOnSic(xml);
 
+            xml = updateTaskVerSipo(xml, "0.1.5");
             //
             //
             //
