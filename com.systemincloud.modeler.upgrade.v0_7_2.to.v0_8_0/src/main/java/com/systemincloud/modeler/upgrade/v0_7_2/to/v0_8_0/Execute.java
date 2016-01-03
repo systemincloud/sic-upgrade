@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
+import com.systemincloud.ext.vip.modeler.upgrade.v0_3_6.to.v0_3_7.VipExecute;
 import com.systemincloud.modeler.upgrade.common.AbstractExecute;
 
 import net.sf.saxon.s9api.SaxonApiException;
@@ -32,6 +33,8 @@ public class Execute extends AbstractExecute {
             xml = updateTaskVerMux            (xml, "0.2.1");
             xml = updateTaskVerRandomGenerator(xml, "0.2.6");
             xml = updateTaskVerSipo           (xml, "0.1.6");
+
+            xml = new VipExecute().executeOnFile(xml);
             //
             //
             //
@@ -43,9 +46,12 @@ public class Execute extends AbstractExecute {
     @Override
     public boolean execute(String root) {
         try {
-            FileUtils.writeStringToFile(new File(root + "/.pydevproject"), IOUtils.toString(Execute.class.getResourceAsStream(".pydevproject")));
+            String pyproject = IOUtils.toString(Execute.class.getResourceAsStream(".pydevproject"));
+            pyproject = new VipExecute().executeOnPyDevProjectFile(pyproject);
+            FileUtils.writeStringToFile(new File(root + "/.pydevproject"), pyproject);
             createFile(root, "src/main/py/PLACEHOLDER_FOR_PY", "");
             createFile(root, "src/test/py/PLACEHOLDER_FOR_PY", "");
+
         } catch (IOException e) { }
         return super.executeOnRoot(root);
     }
@@ -76,6 +82,8 @@ public class Execute extends AbstractExecute {
         String ret;
         ret = updateDependencyVersion(pom, DEP_JAVA_API, "0.6.0");
         ret = addDependency(ret, DEP_PYTHON_API, "0.1.0");
+
+        ret = new VipExecute().executeOnPom(ret);
         return ret;
     }
 }

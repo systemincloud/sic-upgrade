@@ -252,6 +252,10 @@ public abstract class AbstractExecute implements IExecute {
         }, null);
     }
 
+    public static String transform2(String xml, String xsl) throws SaxonApiException {
+        return transform2(xml, xsl, (Map<String, String>) null, (Map<Serializer.Property, String>) null);
+    }
+
     public static String transform2(String xml, String xsl, Map<String, String> params, Map<Serializer.Property, String> props) throws SaxonApiException {
         Processor      proc   = new Processor(false);
         XsltCompiler   comp   = proc.newXsltCompiler();
