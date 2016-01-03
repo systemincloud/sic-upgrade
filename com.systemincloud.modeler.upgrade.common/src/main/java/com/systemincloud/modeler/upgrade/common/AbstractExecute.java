@@ -67,6 +67,9 @@ public abstract class AbstractExecute implements IExecute {
     private static String randomGeneratorVersionXsl;
     private static String sipoVersionXsl;
 
+    private static String addProjectNatureXsl;
+    private static String addBuildCommandXsl;
+
     private static String addDependencyXsl;
     private static String updateDependencyVersionXsl;
 
@@ -88,6 +91,9 @@ public abstract class AbstractExecute implements IExecute {
             randomGeneratorVersionXsl  = IOUtils.toString(AbstractExecute.class.getResourceAsStream("random-generator-version.xsl"), "UTF-8");
             sipoVersionXsl             = IOUtils.toString(AbstractExecute.class.getResourceAsStream("sipo-version.xsl"), "UTF-8");
 
+            addProjectNatureXsl        = IOUtils.toString(AbstractExecute.class.getResourceAsStream("add-project-nature.xsl"), "UTF-8");
+            addBuildCommandXsl         = IOUtils.toString(AbstractExecute.class.getResourceAsStream("add-build-command.xsl"), "UTF-8");
+
             addDependencyXsl           = IOUtils.toString(AbstractExecute.class.getResourceAsStream("add-dependency.xsl"), "UTF-8");
             updateDependencyVersionXsl = IOUtils.toString(AbstractExecute.class.getResourceAsStream("update-dependency-version.xsl"), "UTF-8");
         } catch (IOException e) { }
@@ -96,6 +102,11 @@ public abstract class AbstractExecute implements IExecute {
     protected boolean executeOnRoot(String root) {
         try {
             setProjectVersion(root, getVersion());
+
+            String pfile = getProjectFile(root);
+            pfile = executeOnProjectFile(pfile);
+            saveProjectFile(root, pfile);
+
 
             String pom = getPom(root);
             pom = executeOnPom(pom);
@@ -116,6 +127,15 @@ public abstract class AbstractExecute implements IExecute {
         prefs.setProperty("modeler.version", version);
         prefs.store(out, null);
         out.close();
+    }
+
+    private String getProjectFile(String root) throws IOException {
+        byte[] encoded = Files.readAllBytes(Paths.get(root + "/.project"));
+        return new String(encoded, "UTF-8");
+    }
+
+    private void saveProjectFile(String root, String pfile) throws IOException {
+        FileUtils.writeStringToFile(new File(root + "/.project"), pfile);
     }
 
     private String getPom(String root) throws IOException {
@@ -173,6 +193,14 @@ public abstract class AbstractExecute implements IExecute {
     public static String updateTaskVerMux            (String xml, String version) throws SaxonApiException { return transform2(xml, muxVersionXsl,             "version", version); }
     public static String updateTaskVerRandomGenerator(String xml, String version) throws SaxonApiException { return transform2(xml, randomGeneratorVersionXsl, "version", version); }
     public static String updateTaskVerSipo           (String xml, String version) throws SaxonApiException { return transform2(xml, sipoVersionXsl,            "version", version); }
+
+    public static String addBuildCommand(String pfile, String name) throws SaxonApiException {
+        return transform2(pfile, addBuildCommandXsl, "name", name);
+    }
+
+    public static String addProjectNature(String pfile, String nature) throws SaxonApiException {
+        return transform2(pfile, addProjectNatureXsl, "nature", nature);
+    }
 
     public static String addDependency(String pom, String dependency, final String version) throws SaxonApiException {
         final String groupId    = dependency.substring(0, dependency.indexOf(":"));
@@ -246,7 +274,14 @@ public abstract class AbstractExecute implements IExecute {
     }
 
     protected abstract String getVersion();
-    protected abstract String executeOnPom(String pom) throws SaxonApiException;
+
+    public String executeOnPom(String pom) throws SaxonApiException {
+        return pom;
+    }
+
+    public String executeOnProjectFile(String file) throws SaxonApiException {
+        return file;
+    }
 
     public static String executeTransform(Class<?> clazz, String xml, String xslName) throws SaxonApiException {
         return executeTransform(clazz, xml, xslName, null);

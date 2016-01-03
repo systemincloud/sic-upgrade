@@ -47,6 +47,14 @@ public class Execute extends AbstractExecute {
     }
 
     @Override
+    public String executeOnProjectFile(String pfile) throws SaxonApiException {
+        String ret;
+        ret = addProjectNature(pfile, "org.python.pydev.pythonNature");
+        ret = addBuildCommand(ret, "org.python.pydev.PyDevBuilder");
+        return ret;
+    }
+
+    @Override
     public String executeOnPom(String pom) throws SaxonApiException {
         String ret;
         ret = updateDependencyVersion(pom, DEP_JAVA_API, "0.6.0");
