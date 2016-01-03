@@ -4,6 +4,8 @@ import java.io.File;
 
 import com.systemincloud.modeler.upgrade.common.AbstractExecute;
 
+import net.sf.saxon.s9api.SaxonApiException;
+
 public class Execute extends AbstractExecute {
 
     @Override
@@ -13,6 +15,19 @@ public class Execute extends AbstractExecute {
             xml = readFile(file);
             xml = super.executeOnSic(xml);
 
+            xml = updateTaskVerConsole        (xml, "0.1.8");
+            xml = updateTaskVerConstant       (xml, "0.2.6");
+            xml = updateTaskVerDemux          (xml, "0.3.1");
+            xml = updateTaskVerEmbeddedTask   (xml, "0.3.2");
+            xml = updateTaskVerAnd            (xml, "0.1.5");
+            xml = updateTaskVerNot            (xml, "0.1.5");
+            xml = updateTaskVerOr             (xml, "0.1.5");
+            xml = updateTaskVerXor            (xml, "0.1.5");
+            xml = updateTaskVerInspect        (xml, "0.1.3");
+            xml = updateTaskVerJavaTask       (xml, "0.4.1");
+            xml = updateTaskVerMux            (xml, "0.2.1");
+            xml = updateTaskVerRandomGenerator(xml, "0.2.6");
+            xml = updateTaskVerSipo           (xml, "0.1.6");
             //
             //
             //
@@ -32,7 +47,10 @@ public class Execute extends AbstractExecute {
     }
 
     @Override
-    protected String executeOnPom(String pom) {
-        return pom;
+    public String executeOnPom(String pom) throws SaxonApiException {
+        String ret;
+        ret = updateDependencyVersion(pom, DEP_JAVA_API, "0.6.0");
+        ret = addDependency(ret, DEP_PYTHON_API, "0.1.0");
+        return ret;
     }
 }
