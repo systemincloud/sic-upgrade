@@ -7,6 +7,8 @@
     <xsl:param name="artifactId"/>
     <xsl:param name="version"/>
 
+    <xsl:output indent="yes"/>
+
     <xsl:template match="@*|node()">
         <xsl:copy>
             <xsl:apply-templates select="@*|node()" />

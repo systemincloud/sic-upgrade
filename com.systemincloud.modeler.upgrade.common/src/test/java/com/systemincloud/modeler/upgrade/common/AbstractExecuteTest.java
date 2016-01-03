@@ -23,12 +23,11 @@ public class AbstractExecuteTest {
     @Test
     public void addClasspathEntryTest() {
         try {
-            String ret = AbstractExecute.addClasspathEntry(IOUtils.toString(AbstractExecuteTest.class.getResourceAsStream(".classpath")),
+            AbstractExecute.addClasspathEntry(IOUtils.toString(AbstractExecuteTest.class.getResourceAsStream(".classpath")),
                                                            "src/main/java",
                                                            "src",
                                                            "src/main/py",
                                                            "**/__pycache__/**");
-            System.out.println(ret);
         } catch (SaxonApiException | IOException e) {
             fail();
         }

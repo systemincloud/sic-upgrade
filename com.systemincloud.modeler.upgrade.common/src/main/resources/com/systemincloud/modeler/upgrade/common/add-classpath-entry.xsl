@@ -7,6 +7,8 @@
     <xsl:param name="path"/>
     <xsl:param name="excluding"/>
 
+    <xsl:output indent="yes"/>
+
     <xsl:template match="@*|node()">
         <xsl:copy>
             <xsl:apply-templates select="@*|node()" />

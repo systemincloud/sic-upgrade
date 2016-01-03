@@ -208,13 +208,13 @@ public abstract class AbstractExecute implements IExecute {
 
     public static String addClasspathEntry(String file, final String before, final String kind, final String path, final String excluding) throws SaxonApiException {
         return transform2(file, addClasspathEntryXsl, new HashMap<String, String>() { private static final long serialVersionUID = 1L;
-        {
+            {
             put("before",    before);
             put("kind",      kind);
             put("path",      path);
             put("excluding", excluding);
-        }
-    });
+            }
+        }, null);
     }
 
     public static String addDependency(String pom, String dependency, final String version) throws SaxonApiException {
@@ -226,7 +226,7 @@ public abstract class AbstractExecute implements IExecute {
                 put("artifactId", artifactId);
                 put("version",    version);
             }
-        });
+        }, null);
     }
 
     public static String updateDependencyVersion(String pom, String dependency, final String version) throws SaxonApiException {
@@ -238,7 +238,7 @@ public abstract class AbstractExecute implements IExecute {
                 put("artifactId", artifactId);
                 put("version",    version);
             }
-        });
+        }, null);
     }
 
     protected String executeOnSic(String xml) throws SaxonApiException {
@@ -249,17 +249,19 @@ public abstract class AbstractExecute implements IExecute {
     public static String transform2(String xml, String xsl, final String key, final String value) throws SaxonApiException {
         return transform2(xml, xsl, new HashMap<String, String>() { private static final long serialVersionUID = 1L;
             { put(key, value); }
-        });
+        }, null);
     }
 
-    public static String transform2(String xml, String xsl, Map<String, String> params) throws SaxonApiException {
+    public static String transform2(String xml, String xsl, Map<String, String> params, Map<Serializer.Property, String> props) throws SaxonApiException {
         Processor      proc   = new Processor(false);
         XsltCompiler   comp   = proc.newXsltCompiler();
         XsltExecutable exp    = comp.compile(new StreamSource(new StringReader(xsl)));
         XdmNode        source = proc.newDocumentBuilder().build(new StreamSource(new StringReader(xml)));
         Serializer     out    = proc.newSerializer();
         out.setOutputProperty(Serializer.Property.METHOD, "xml");
-        out.setOutputProperty(Serializer.Property.INDENT, "yes");
+        if(props != null)
+            for(Entry<Serializer.Property, String> es : props.entrySet())
+                out.setOutputProperty(es.getKey(), es.getValue());
         XsltTransformer t  = exp.load();
         StringWriter    sw = new StringWriter();
         out.setOutputWriter(sw);
@@ -311,7 +313,7 @@ public abstract class AbstractExecute implements IExecute {
         try {
             xsl = IOUtils.toString(clazz.getResourceAsStream(xslName), "UTF-8");
         } catch (IOException e) { }
-        return transform2(xml, xsl, null);
+        return transform2(xml, xsl, params, null);
     }
 
     public static final String DEP_JAVA_API   = "com.systemincloud.modeler.tasks.javatask:com.systemincloud.modeler.tasks.javatask.api";

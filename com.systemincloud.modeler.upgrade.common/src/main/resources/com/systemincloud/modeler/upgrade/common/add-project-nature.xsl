@@ -4,6 +4,8 @@
                 exclude-result-prefixes="xsi">
     <xsl:param name="nature"/>
 
+    <xsl:output indent="yes"/>
+
     <xsl:template match="@*|node()">
         <xsl:copy>
             <xsl:apply-templates select="@*|node()" />
