@@ -1,6 +1,10 @@
 package com.systemincloud.modeler.upgrade.v0_7_2.to.v0_8_0;
 
 import java.io.File;
+import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 
 import com.systemincloud.modeler.upgrade.common.AbstractExecute;
 
@@ -38,6 +42,11 @@ public class Execute extends AbstractExecute {
 
     @Override
     public boolean execute(String root) {
+        try {
+            FileUtils.writeStringToFile(new File(root + "/.pydevproject"), IOUtils.toString(Execute.class.getResourceAsStream(".pydevproject")));
+            createFile(root, "src/main/py/PLACEHOLDER_FOR_PY", "");
+            createFile(root, "src/test/py/PLACEHOLDER_FOR_PY", "");
+        } catch (IOException e) { }
         return super.executeOnRoot(root);
     }
 
@@ -51,6 +60,14 @@ public class Execute extends AbstractExecute {
         String ret;
         ret = addProjectNature(pfile, "org.python.pydev.pythonNature");
         ret = addBuildCommand(ret, "org.python.pydev.PyDevBuilder");
+        return ret;
+    }
+
+    @Override
+    public String executeOnClassPathFile(String file) throws SaxonApiException {
+        String ret;
+        ret = addClasspathEntry(file, "src/test/java", "src", "src/main/py", "**/__pycache__/**");
+        ret = addClasspathEntry(ret,  "src/main/py",   "src", "src/test/py", "**/__pycache__/**");
         return ret;
     }
 

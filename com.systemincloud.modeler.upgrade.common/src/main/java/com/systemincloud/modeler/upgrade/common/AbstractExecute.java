@@ -70,6 +70,8 @@ public abstract class AbstractExecute implements IExecute {
     private static String addProjectNatureXsl;
     private static String addBuildCommandXsl;
 
+    private static String addClasspathEntryXsl;
+
     private static String addDependencyXsl;
     private static String updateDependencyVersionXsl;
 
@@ -94,6 +96,8 @@ public abstract class AbstractExecute implements IExecute {
             addProjectNatureXsl        = IOUtils.toString(AbstractExecute.class.getResourceAsStream("add-project-nature.xsl"), "UTF-8");
             addBuildCommandXsl         = IOUtils.toString(AbstractExecute.class.getResourceAsStream("add-build-command.xsl"), "UTF-8");
 
+            addClasspathEntryXsl       = IOUtils.toString(AbstractExecute.class.getResourceAsStream("add-classpath-entry.xsl"), "UTF-8");
+
             addDependencyXsl           = IOUtils.toString(AbstractExecute.class.getResourceAsStream("add-dependency.xsl"), "UTF-8");
             updateDependencyVersionXsl = IOUtils.toString(AbstractExecute.class.getResourceAsStream("update-dependency-version.xsl"), "UTF-8");
         } catch (IOException e) { }
@@ -103,14 +107,17 @@ public abstract class AbstractExecute implements IExecute {
         try {
             setProjectVersion(root, getVersion());
 
-            String pfile = getProjectFile(root);
+            String pfile = getFile(root, "/.project");
             pfile = executeOnProjectFile(pfile);
-            saveProjectFile(root, pfile);
+            saveFile(root, "/.project", pfile);
 
+            String cfile = getFile(root, "/.classpath");
+            cfile = executeOnClassPathFile(cfile);
+            saveFile(root, "/.classpath", cfile);
 
-            String pom = getPom(root);
+            String pom = getFile(root, "/pom.xml");
             pom = executeOnPom(pom);
-            savePom(root, pom);
+            saveFile(root, "/pom.xml", pom);
 
             updateJavaTasks(root);
         } catch (Exception e) { return false; }
@@ -129,22 +136,13 @@ public abstract class AbstractExecute implements IExecute {
         out.close();
     }
 
-    private String getProjectFile(String root) throws IOException {
-        byte[] encoded = Files.readAllBytes(Paths.get(root + "/.project"));
+    private String getFile(String root, String path) throws IOException {
+        byte[] encoded = Files.readAllBytes(Paths.get(root + path));
         return new String(encoded, "UTF-8");
     }
 
-    private void saveProjectFile(String root, String pfile) throws IOException {
-        FileUtils.writeStringToFile(new File(root + "/.project"), pfile);
-    }
-
-    private String getPom(String root) throws IOException {
-        byte[] encoded = Files.readAllBytes(Paths.get(root + "/pom.xml"));
-        return new String(encoded, "UTF-8");
-    }
-
-    private void savePom(String root, String pom) throws IOException {
-        FileUtils.writeStringToFile(new File(root + "/pom.xml"), pom);
+    private void saveFile(String root, String path, String content) throws IOException {
+        FileUtils.writeStringToFile(new File(root + path), content);
     }
 
     private void updateJavaTasks(String root) {
@@ -194,12 +192,29 @@ public abstract class AbstractExecute implements IExecute {
     public static String updateTaskVerRandomGenerator(String xml, String version) throws SaxonApiException { return transform2(xml, randomGeneratorVersionXsl, "version", version); }
     public static String updateTaskVerSipo           (String xml, String version) throws SaxonApiException { return transform2(xml, sipoVersionXsl,            "version", version); }
 
-    public static String addBuildCommand(String pfile, String name) throws SaxonApiException {
-        return transform2(pfile, addBuildCommandXsl, "name", name);
+    public void createFile(String root, String path, String content) throws IOException {
+        File f = new File(root + "/" + path);
+        f.getParentFile().mkdirs();
+        FileUtils.writeStringToFile(f, content);
     }
 
-    public static String addProjectNature(String pfile, String nature) throws SaxonApiException {
-        return transform2(pfile, addProjectNatureXsl, "nature", nature);
+    public static String addBuildCommand(String file, String name) throws SaxonApiException {
+        return transform2(file, addBuildCommandXsl, "name", name);
+    }
+
+    public static String addProjectNature(String file, String nature) throws SaxonApiException {
+        return transform2(file, addProjectNatureXsl, "nature", nature);
+    }
+
+    public static String addClasspathEntry(String file, final String after, final String kind, final String path, final String excluding) throws SaxonApiException {
+        return transform2(file, addClasspathEntryXsl, new HashMap<String, String>() { private static final long serialVersionUID = 1L;
+        {
+            put("after",     after);
+            put("kind",      kind);
+            put("path",      path);
+            put("excluding", excluding);
+        }
+    });
     }
 
     public static String addDependency(String pom, String dependency, final String version) throws SaxonApiException {
@@ -280,6 +295,10 @@ public abstract class AbstractExecute implements IExecute {
     }
 
     public String executeOnProjectFile(String file) throws SaxonApiException {
+        return file;
+    }
+
+    public String executeOnClassPathFile(String file) throws SaxonApiException {
         return file;
     }
 
