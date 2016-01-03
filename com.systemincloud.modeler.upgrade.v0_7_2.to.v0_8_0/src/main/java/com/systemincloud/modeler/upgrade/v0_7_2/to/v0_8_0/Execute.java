@@ -66,8 +66,8 @@ public class Execute extends AbstractExecute {
     @Override
     public String executeOnClassPathFile(String file) throws SaxonApiException {
         String ret;
-        ret = addClasspathEntry(file, "src/test/java", "src", "src/main/py", "**/__pycache__/**");
-        ret = addClasspathEntry(ret,  "src/main/py",   "src", "src/test/py", "**/__pycache__/**");
+        ret = addClasspathEntry(file, "src/test/resources", "src", "src/main/py", "**/__pycache__/**");
+        ret = addClasspathEntry(ret,  "src/test/resources", "src", "src/test/py", "**/__pycache__/**");
         return ret;
     }
 

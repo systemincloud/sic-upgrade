@@ -206,10 +206,10 @@ public abstract class AbstractExecute implements IExecute {
         return transform2(file, addProjectNatureXsl, "nature", nature);
     }
 
-    public static String addClasspathEntry(String file, final String after, final String kind, final String path, final String excluding) throws SaxonApiException {
+    public static String addClasspathEntry(String file, final String before, final String kind, final String path, final String excluding) throws SaxonApiException {
         return transform2(file, addClasspathEntryXsl, new HashMap<String, String>() { private static final long serialVersionUID = 1L;
         {
-            put("after",     after);
+            put("before",    before);
             put("kind",      kind);
             put("path",      path);
             put("excluding", excluding);
