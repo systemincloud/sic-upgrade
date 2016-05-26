@@ -13,7 +13,7 @@
 			<xsl:apply-templates select="@*|node()" />
 		</xsl:copy>
 	</xsl:template>
-	<xsl:template match="@version[parent::task[@xsi:type='sic:PythonTask']]">
+	<xsl:template match="@version[parent::task[@xsi:type='pythontask_0_1_0:PythonTask']]">
 		<xsl:attribute name="version">
     		<xsl:value-of select="$version" />
   		</xsl:attribute>
