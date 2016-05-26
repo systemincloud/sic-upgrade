@@ -64,6 +64,7 @@ public abstract class AbstractExecute implements IExecute {
     private static String notVersionXsl;
     private static String javaTaskVersionXsl;
     private static String muxVersionXsl;
+    private static String pythonTaskVersionXsl;
     private static String randomGeneratorVersionXsl;
     private static String sipoVersionXsl;
 
@@ -90,6 +91,7 @@ public abstract class AbstractExecute implements IExecute {
             notVersionXsl              = IOUtils.toString(AbstractExecute.class.getResourceAsStream("not-version.xsl"), "UTF-8");
             javaTaskVersionXsl         = IOUtils.toString(AbstractExecute.class.getResourceAsStream("java-task-version.xsl"), "UTF-8");
             muxVersionXsl              = IOUtils.toString(AbstractExecute.class.getResourceAsStream("mux-version.xsl"), "UTF-8");
+            pythonTaskVersionXsl       = IOUtils.toString(AbstractExecute.class.getResourceAsStream("python-task-version.xsl"), "UTF-8");
             randomGeneratorVersionXsl  = IOUtils.toString(AbstractExecute.class.getResourceAsStream("random-generator-version.xsl"), "UTF-8");
             sipoVersionXsl             = IOUtils.toString(AbstractExecute.class.getResourceAsStream("sipo-version.xsl"), "UTF-8");
 
@@ -189,6 +191,7 @@ public abstract class AbstractExecute implements IExecute {
     public static String updateTaskVerNot            (String xml, String version) throws SaxonApiException { return transform2(xml, notVersionXsl,             "version", version); }
     public static String updateTaskVerJavaTask       (String xml, String version) throws SaxonApiException { return transform2(xml, javaTaskVersionXsl,        "version", version); }
     public static String updateTaskVerMux            (String xml, String version) throws SaxonApiException { return transform2(xml, muxVersionXsl,             "version", version); }
+    public static String updateTaskVerPythonTask     (String xml, String version) throws SaxonApiException { return transform2(xml, pythonTaskVersionXsl,      "version", version); }
     public static String updateTaskVerRandomGenerator(String xml, String version) throws SaxonApiException { return transform2(xml, randomGeneratorVersionXsl, "version", version); }
     public static String updateTaskVerSipo           (String xml, String version) throws SaxonApiException { return transform2(xml, sipoVersionXsl,            "version", version); }
 
@@ -212,7 +215,7 @@ public abstract class AbstractExecute implements IExecute {
             put("before",    before);
             put("kind",      kind);
             put("path",      path);
-            put("excluding", excluding);
+            if(excluding != null) put("excluding", excluding);
             }
         }, null);
     }

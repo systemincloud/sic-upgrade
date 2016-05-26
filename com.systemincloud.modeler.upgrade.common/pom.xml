@@ -3,7 +3,7 @@
 
     <groupId>com.systemincloud.modeler.upgrade</groupId>
     <artifactId>com.systemincloud.modeler.upgrade.common</artifactId>
-    <version>2.7.0</version>
+    <version>3.0.0</version>
     <name>System in Cloud Modeler - Upgrade - Common</name>
 
     <dependencies>
@@ -22,8 +22,8 @@
 
     <build>
         <plugins>
-            <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.1</version>
-                <configuration><source>1.7</source><target>1.7</target></configuration>
+            <plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><version>3.5.1</version>
+                <configuration><source>1.8</source><target>1.8</target></configuration>
             </plugin>
         </plugins>
     </build>
