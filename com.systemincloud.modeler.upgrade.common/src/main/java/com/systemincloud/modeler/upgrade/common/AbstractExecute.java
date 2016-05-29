@@ -121,6 +121,10 @@ public abstract class AbstractExecute implements IExecute {
             pom = executeOnPom(pom);
             saveFile(root, "/pom.xml", pom);
 
+            String pyfile = getFile(root, "/.pydevproject");
+            pyfile = executeOnClassPathFile(pyfile);
+            saveFile(root, "/.pydevproject", pyfile);
+
             updateJavaTasks(root);
         } catch (Exception e) { return false; }
         return true;
@@ -309,6 +313,10 @@ public abstract class AbstractExecute implements IExecute {
 
     public String executeOnClassPathFile(String file) throws SaxonApiException {
         return file;
+    }
+
+    public String executeOnPyDevProject(String file) throws SaxonApiException {
+    	return file;
     }
 
     public static String executeTransform(Class<?> clazz, String xml, String xslName) throws SaxonApiException {

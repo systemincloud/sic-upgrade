@@ -88,4 +88,17 @@ public class Execute extends AbstractExecute {
         ret = new VipExecute().executeOnPom(ret);
         return ret;
     }
+
+    @Override
+    public String executeOnPyDevProject(String file) throws SaxonApiException {
+    	String result = file;
+		try {
+			String xsl = IOUtils.toString(AbstractExecute.class.getResourceAsStream("update-pythontask-process-version.xsl"), "UTF-8");
+	        result = transform2(file, xsl, "version", "0.2.0");
+	        result = new VipExecute().executeOnPom(result);
+		} catch (IOException e) {
+		}
+
+        return result;
+    }
 }
